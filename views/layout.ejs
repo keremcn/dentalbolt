@@ -3,19 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= typeof title !== 'undefined' ? title + ' - ' : '' %>Bright Smile Dental</title>
+    <title><%= typeof title !== 'undefined' ? title : 'Home' %> - Bright Smile Dental</title>
     <link rel="stylesheet" href="/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header class="header" id="header">
+    <header id="header" class="header">
         <div class="container">
             <div class="header-content">
                 <div class="logo">
-                    <a href="/">🦷 Bright Smile Dental</a>
+                    <h1>Bright Smile Dental</h1>
                 </div>
-                <nav class="nav">
-                    <ul class="nav-menu" id="nav-menu">
+                <nav class="nav" id="nav-menu">
+                    <ul class="nav-list">
                         <li><a href="/" class="<%= currentPage === 'home' ? 'active' : '' %>">Home</a></li>
                         <li><a href="/services" class="<%= currentPage === 'services' ? 'active' : '' %>">Services</a></li>
                         <li><a href="/about" class="<%= currentPage === 'about' ? 'active' : '' %>">About</a></li>

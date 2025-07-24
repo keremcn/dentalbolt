@@ -5,6 +5,7 @@ const session = require('express-session');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
+const expressLayouts = require('express-ejs-layouts');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -124,6 +125,8 @@ app.use(session({
 // Set view engine
 app.set('view engine', 'ejs');
 app.set('views', './views');
+app.use(expressLayouts);
+app.set('layout', 'layout');
 
 // File upload configuration
 const storage = multer.diskStorage({
@@ -166,6 +169,7 @@ app.get('/', (req, res) => {
       }
       
       res.render('index', { 
+        title: 'Home',
         practiceInfo: practiceInfo || {}, 
         services: services || [],
         currentPage: 'home'
@@ -188,6 +192,7 @@ app.get('/services', (req, res) => {
       }
       
       res.render('services', { 
+        title: 'Services',
         services: services || [],
         practiceInfo: practiceInfo || {},
         currentPage: 'services'
@@ -210,6 +215,7 @@ app.get('/about', (req, res) => {
       }
       
       res.render('about', { 
+        title: 'About Us',
         practiceInfo: practiceInfo || {},
         teamMembers: teamMembers || [],
         currentPage: 'about'
@@ -226,6 +232,7 @@ app.get('/contact', (req, res) => {
     }
     
     res.render('contact', { 
+      title: 'Contact Us',
       practiceInfo: practiceInfo || {},
       currentPage: 'contact'
     });
@@ -243,7 +250,7 @@ app.post('/contact', (req, res) => {
         console.error(err);
         return res.status(500).send('Server error');
       }
-      res.render('contact-success', { currentPage: 'contact' });
+      res.render('contact-success', { title: 'Appointment Requested', currentPage: 'contact' });
     }
   );
 });
@@ -297,6 +304,7 @@ app.get('/admin', requireAuth, (req, res) => {
           return res.status(500).send('Server error');
         }
         
+        res.locals.layout = 'admin/layout';
         res.render('admin/dashboard', {
           appointmentCount: appointments.count,
           serviceCount: services.count,
@@ -315,11 +323,13 @@ app.get('/admin/services', requireAuth, (req, res) => {
       console.error(err);
       return res.status(500).send('Server error');
     }
+    res.locals.layout = 'admin/layout';
     res.render('admin/services', { services: services || [], currentPage: 'services' });
   });
 });
 
 app.get('/admin/services/add', requireAuth, (req, res) => {
+  res.locals.layout = 'admin/layout';
   res.render('admin/service-form', { service: null, currentPage: 'services' });
 });
 
@@ -329,6 +339,7 @@ app.get('/admin/services/edit/:id', requireAuth, (req, res) => {
       console.error(err);
       return res.status(500).send('Server error');
     }
+    res.locals.layout = 'admin/layout';
     res.render('admin/service-form', { service: service, currentPage: 'services' });
   });
 });
@@ -383,11 +394,13 @@ app.get('/admin/team', requireAuth, (req, res) => {
       console.error(err);
       return res.status(500).send('Server error');
     }
+    res.locals.layout = 'admin/layout';
     res.render('admin/team', { teamMembers: teamMembers || [], currentPage: 'team' });
   });
 });
 
 app.get('/admin/team/add', requireAuth, (req, res) => {
+  res.locals.layout = 'admin/layout';
   res.render('admin/team-form', { member: null, currentPage: 'team' });
 });
 
@@ -397,6 +410,7 @@ app.get('/admin/team/edit/:id', requireAuth, (req, res) => {
       console.error(err);
       return res.status(500).send('Server error');
     }
+    res.locals.layout = 'admin/layout';
     res.render('admin/team-form', { member: member, currentPage: 'team' });
   });
 });
@@ -451,6 +465,7 @@ app.get('/admin/practice', requireAuth, (req, res) => {
       console.error(err);
       return res.status(500).send('Server error');
     }
+    res.locals.layout = 'admin/layout';
     res.render('admin/practice', { practiceInfo: practiceInfo || {}, currentPage: 'practice' });
   });
 });
@@ -478,6 +493,7 @@ app.get('/admin/appointments', requireAuth, (req, res) => {
       console.error(err);
       return res.status(500).send('Server error');
     }
+    res.locals.layout = 'admin/layout';
     res.render('admin/appointments', { appointments: appointments || [], currentPage: 'appointments' });
   });
 });

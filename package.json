@@ -7,15 +7,22 @@
     "start": "node server.js",
     "dev": "node server.js"
   },
-  "keywords": ["dental", "cms", "website", "express", "sqlite"],
+  "keywords": [
+    "dental",
+    "cms",
+    "website",
+    "express",
+    "sqlite"
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "latest",
-    "ejs": "latest",
-    "multer": "latest",
-    "sqlite3": "latest",
     "bcryptjs": "latest",
-    "express-session": "latest"
+    "ejs": "latest",
+    "express": "latest",
+    "express-ejs-layouts": "^2.5.1",
+    "express-session": "latest",
+    "multer": "latest",
+    "sqlite3": "latest"
   }
 }
