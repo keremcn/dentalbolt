@@ -1,0 +1,102 @@
+<%- include('layout', { title: service ? 'Edit Service' : 'Add Service' }) %>
+
+<div style="margin-bottom: 2rem;">
+    <h1><%= service ? 'Edit Service' : 'Add New Service' %></h1>
+    <p style="color: var(--gray-600);">
+        <%= service ? 'Update the details for this service.' : 'Create a new service to display on your website.' %>
+    </p>
+</div>
+
+<div class="grid grid-2" style="gap: 3rem;">
+    <div class="card">
+        <div class="card-content">
+            <form action="/admin/services" method="POST" enctype="multipart/form-data">
+                <% if (service) { %>
+                    <input type="hidden" name="id" value="<%= service.id %>">
+                    <input type="hidden" name="existing_image" value="<%= service.image_url %>">
+                <% } %>
+
+                <div class="form-group">
+                    <label for="title" class="form-label">Service Title *</label>
+                    <input type="text" id="title" name="title" class="form-input" 
+                           value="<%= service ? service.title : '' %>" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="description" class="form-label">Description *</label>
+                    <textarea id="description" name="description" class="form-textarea" 
+                              rows="4" required><%= service ? service.description : '' %></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="image" class="form-label">Service Image</label>
+                    <input type="file" id="image" name="image" class="form-input" accept="image/*">
+                    <p style="font-size: 0.875rem; color: var(--gray-600); margin-top: 0.25rem;">
+                        Upload a high-quality image that represents this service. JPG, PNG formats accepted.
+                    </p>
+                </div>
+
+                <div class="grid grid-2">
+                    <div class="form-group">
+                        <label for="price" class="form-label">Price Range</label>
+                        <input type="text" id="price" name="price" class="form-input" 
+                               value="<%= service ? service.price : '' %>" 
+                               placeholder="e.g., $100-200, Starting at $150">
+                    </div>
+                    <div class="form-group">
+                        <label for="duration" class="form-label">Duration</label>
+                        <input type="text" id="duration" name="duration" class="form-input" 
+                               value="<%= service ? service.duration : '' %>" 
+                               placeholder="e.g., 60 minutes, 1-2 hours">
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                    <button type="submit" class="btn btn-primary">
+                        <%= service ? 'Update Service' : 'Create Service' %>
+                    </button>
+                    <a href="/admin/services" class="btn btn-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <% if (service && service.image_url) { %>
+            <div class="card">
+                <div class="card-content">
+                    <h3>Current Image</h3>
+                    <img src="<%= service.image_url %>" alt="<%= service.title %>" 
+                         style="width: 100%; height: 200px; object-fit: cover; border-radius: 0.5rem; margin-top: 1rem;">
+                </div>
+            </div>
+        <% } %>
+
+        <div class="card mt-4">
+            <div class="card-content">
+                <h3>💡 Tips for Great Services</h3>
+                <ul style="color: var(--gray-600); line-height: 1.6;">
+                    <li><strong>Clear Titles:</strong> Use descriptive names that patients will understand</li>
+                    <li><strong>Detailed Descriptions:</strong> Explain what the service includes and its benefits</li>
+                    <li><strong>Quality Images:</strong> Use professional photos that showcase the service</li>
+                    <li><strong>Pricing:</strong> Be transparent about costs or provide ranges</li>
+                    <li><strong>Duration:</strong> Help patients plan their time</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-content">
+                <h3>📋 Service Categories</h3>
+                <p style="color: var(--gray-600); margin-bottom: 1rem;">Popular dental service categories:</p>
+                <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                    <span style="background-color: var(--gray-100); padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.875rem;">General Dentistry</span>
+                    <span style="background-color: var(--gray-100); padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.875rem;">Cosmetic Dentistry</span>
+                    <span style="background-color: var(--gray-100); padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.875rem;">Orthodontics</span>
+                    <span style="background-color: var(--gray-100); padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.875rem;">Oral Surgery</span>
+                    <span style="background-color: var(--gray-100); padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.875rem;">Preventive Care</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

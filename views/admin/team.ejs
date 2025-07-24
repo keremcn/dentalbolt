@@ -1,0 +1,78 @@
+<%- include('layout', { title: 'Manage Team' }) %>
+
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+    <div>
+        <h1>Manage Team</h1>
+        <p style="color: var(--gray-600);">Add and manage your dental team members.</p>
+    </div>
+    <a href="/admin/team/add" class="btn btn-primary">Add Team Member</a>
+</div>
+
+<% if (teamMembers.length > 0) { %>
+    <div class="card">
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>Team Member</th>
+                    <th>Title</th>
+                    <th>Specialties</th>
+                    <th>Created</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% teamMembers.forEach(member => { %>
+                    <tr>
+                        <td>
+                            <div style="display: flex; align-items: center;">
+                                <% if (member.image_url) { %>
+                                    <img src="<%= member.image_url %>" 
+                                         style="width: 50px; height: 50px; object-fit: cover; border-radius: 50%; margin-right: 1rem;" 
+                                         alt="<%= member.name %>">
+                                <% } %>
+                                <div>
+                                    <strong><%= member.name %></strong>
+                                    <p style="color: var(--gray-600); font-size: 0.875rem; margin: 0;">
+                                        <%= member.bio.substring(0, 60) %>...
+                                    </p>
+                                </div>
+                            </div>
+                        </td>
+                        <td><%= member.title %></td>
+                        <td style="font-size: 0.875rem; color: var(--gray-600);">
+                            <%= member.specialties || 'Not specified' %>
+                        </td>
+                        <td style="font-size: 0.875rem; color: var(--gray-600);">
+                            <%= new Date(member.created_at).toLocaleDateString() %>
+                        </td>
+                        <td>
+                            <div style="display: flex; gap: 0.5rem;">
+                                <a href="/admin/team/edit/<%= member.id %>" class="btn" 
+                                   style="padding: 0.25rem 0.75rem; font-size: 0.875rem; background-color: var(--secondary-color); color: white;">
+                                    Edit
+                                </a>
+                                <form action="/admin/team/delete/<%= member.id %>" method="POST" style="display: inline;">
+                                    <button type="submit" class="btn" 
+                                            style="padding: 0.25rem 0.75rem; font-size: 0.875rem; background-color: var(--error-color); color: white;">
+                                        Delete
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+<% } else { %>
+    <div class="card">
+        <div class="card-content text-center" style="padding: 3rem;">
+            <div style="font-size: 3rem; margin-bottom: 1rem;">👥</div>
+            <h3>No Team Members Yet</h3>
+            <p style="color: var(--gray-600); margin-bottom: 2rem;">
+                Start building your team page by adding your dental professionals.
+            </p>
+            <a href="/admin/team/add" class="btn btn-primary">Add Your First Team Member</a>
+        </div>
+    </div>
+<% } %>

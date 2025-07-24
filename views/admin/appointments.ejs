@@ -1,0 +1,120 @@
+<%- include('layout', { title: 'Appointments' }) %>
+
+<div style="margin-bottom: 2rem;">
+    <h1>Appointment Requests</h1>
+    <p style="color: var(--gray-600);">Manage patient appointment requests and scheduling.</p>
+</div>
+
+<% if (appointments.length > 0) { %>
+    <div class="card">
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>Patient</th>
+                    <th>Service</th>
+                    <th>Preferred Date/Time</th>
+                    <th>Status</th>
+                    <th>Submitted</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% appointments.forEach(appointment => { %>
+                    <tr>
+                        <td>
+                            <div>
+                                <strong><%= appointment.patient_name %></strong>
+                                <p style="color: var(--gray-600); font-size: 0.875rem; margin: 0;">
+                                    📧 <%= appointment.email %>
+                                </p>
+                                <% if (appointment.phone) { %>
+                                    <p style="color: var(--gray-600); font-size: 0.875rem; margin: 0;">
+                                        📞 <%= appointment.phone %>
+                                    </p>
+                                <% } %>
+                            </div>
+                        </td>
+                        <td>
+                            <%= appointment.service || 'General Consultation' %>
+                            <% if (appointment.message) { %>
+                                <p style="color: var(--gray-600); font-size: 0.875rem; margin-top: 0.25rem;">
+                                    "<%= appointment.message.substring(0, 50) %>..."
+                                </p>
+                            <% } %>
+                        </td>
+                        <td style="font-size: 0.875rem;">
+                            <% if (appointment.preferred_date) { %>
+                                <p style="margin: 0;"><strong><%= new Date(appointment.preferred_date).toLocaleDateString() %></strong></p>
+                            <% } %>
+                            <% if (appointment.preferred_time) { %>
+                                <p style="margin: 0; color: var(--gray-600);"><%= appointment.preferred_time %></p>
+                            <% } %>
+                            <% if (!appointment.preferred_date && !appointment.preferred_time) { %>
+                                <span style="color: var(--gray-500);">Flexible</span>
+                            <% } %>
+                        </td>
+                        <td>
+                            <span class="status-badge status-<%= appointment.status %>">
+                                <%= appointment.status.charAt(0).toUpperCase() + appointment.status.slice(1) %>
+                            </span>
+                        </td>
+                        <td style="font-size: 0.875rem; color: var(--gray-600);">
+                            <%= new Date(appointment.created_at).toLocaleDateString() %>
+                            <br>
+                            <%= new Date(appointment.created_at).toLocaleTimeString() %>
+                        </td>
+                        <td>
+                            <form action="/admin/appointments/status/<%= appointment.id %>" method="POST" style="display: inline;">
+                                <select name="status" onchange="this.form.submit()" class="form-select" style="padding: 0.25rem; font-size: 0.875rem;">
+                                    <option value="pending" <%= appointment.status === 'pending' ? 'selected' : '' %>>Pending</option>
+                                    <option value="confirmed" <%= appointment.status === 'confirmed' ? 'selected' : '' %>>Confirmed</option>
+                                    <option value="completed" <%= appointment.status === 'completed' ? 'selected' : '' %>>Completed</option>
+                                    <option value="cancelled" <%= appointment.status === 'cancelled' ? 'selected' : '' %>>Cancelled</option>
+                                </select>
+                            </form>
+                        </td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+<% } else { %>
+    <div class="card">
+        <div class="card-content text-center" style="padding: 3rem;">
+            <div style="font-size: 3rem; margin-bottom: 1rem;">📅</div>
+            <h3>No Appointments Yet</h3>
+            <p style="color: var(--gray-600); margin-bottom: 2rem;">
+                Appointment requests will appear here when patients submit them through your contact form.
+            </p>
+            <a href="/contact" target="_blank" class="btn btn-primary">View Contact Form</a>
+        </div>
+    </div>
+<% } %>
+
+<!-- Appointment Statistics -->
+<div class="grid grid-4 mt-4">
+    <div class="stat-card">
+        <div class="stat-number" style="color: var(--warning-color);">
+            <%= appointments.filter(a => a.status === 'pending').length %>
+        </div>
+        <div class="stat-label">Pending</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-number" style="color: var(--success-color);">
+            <%= appointments.filter(a => a.status === 'confirmed').length %>
+        </div>
+        <div class="stat-label">Confirmed</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-number" style="color: var(--primary-color);">
+            <%= appointments.filter(a => a.status === 'completed').length %>
+        </div>
+        <div class="stat-label">Completed</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-number" style="color: var(--error-color);">
+            <%= appointments.filter(a => a.status === 'cancelled').length %>
+        </div>
+        <div class="stat-label">Cancelled</div>
+    </div>
+</div>

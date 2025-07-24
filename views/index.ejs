@@ -1,0 +1,83 @@
+<%- include('layout', { title: 'Home' }) %>
+
+<!-- Hero Section -->
+<section class="hero">
+    <div class="container">
+        <h1>Your Perfect Smile Starts Here</h1>
+        <p>Experience exceptional dental care in a comfortable, modern environment. Our expert team is dedicated to helping you achieve optimal oral health.</p>
+        <div style="margin-top: 2rem;">
+            <a href="/contact" class="btn btn-secondary" style="margin-right: 1rem;">Schedule Appointment</a>
+            <a href="/services" class="btn btn-primary">Our Services</a>
+        </div>
+    </div>
+</section>
+
+<!-- Services Preview -->
+<section class="section">
+    <div class="container">
+        <div class="text-center mb-6">
+            <h2>Our Services</h2>
+            <p style="color: var(--gray-600); max-width: 600px; margin: 0 auto;">We offer comprehensive dental services to meet all your oral health needs, from preventive care to advanced treatments.</p>
+        </div>
+        
+        <div class="grid grid-4">
+            <% services.forEach(service => { %>
+                <div class="card">
+                    <% if (service.image_url) { %>
+                        <img src="<%= service.image_url %>" alt="<%= service.title %>" class="card-image">
+                    <% } %>
+                    <div class="card-content">
+                        <h3 class="card-title"><%= service.title %></h3>
+                        <p class="card-text"><%= service.description.substring(0, 100) %>...</p>
+                        <% if (service.price) { %>
+                            <p style="color: var(--primary-color); font-weight: 600;"><%= service.price %></p>
+                        <% } %>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+        
+        <div class="text-center mt-6">
+            <a href="/services" class="btn btn-primary">View All Services</a>
+        </div>
+    </div>
+</section>
+
+<!-- Why Choose Us -->
+<section class="section section-dark">
+    <div class="container">
+        <div class="text-center mb-6">
+            <h2>Why Choose Bright Smile Dental?</h2>
+        </div>
+        
+        <div class="grid grid-3">
+            <div class="text-center">
+                <div style="font-size: 3rem; margin-bottom: 1rem;">🏆</div>
+                <h3>Expert Care</h3>
+                <p>Our experienced team provides the highest quality dental care using the latest techniques and technology.</p>
+            </div>
+            <div class="text-center">
+                <div style="font-size: 3rem; margin-bottom: 1rem;">🏥</div>
+                <h3>Modern Facility</h3>
+                <p>State-of-the-art equipment and a comfortable environment ensure the best possible experience for our patients.</p>
+            </div>
+            <div class="text-center">
+                <div style="font-size: 3rem; margin-bottom: 1rem;">❤️</div>
+                <h3>Personalized Treatment</h3>
+                <p>We create customized treatment plans tailored to each patient's unique needs and goals.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action -->
+<section class="section">
+    <div class="container text-center">
+        <h2>Ready to Transform Your Smile?</h2>
+        <p style="color: var(--gray-600); margin-bottom: 2rem;">Contact us today to schedule your consultation and take the first step towards better oral health.</p>
+        <div>
+            <a href="/contact" class="btn btn-primary" style="margin-right: 1rem;">Book Appointment</a>
+            <a href="tel:(555)123-4567" class="btn btn-secondary">Call Now</a>
+        </div>
+    </div>
+</section>

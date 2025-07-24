@@ -1,0 +1,69 @@
+<%- include('layout', { title: 'Services' }) %>
+
+<section class="section">
+    <div class="container">
+        <div class="text-center mb-6">
+            <h1>Our Dental Services</h1>
+            <p style="color: var(--gray-600); max-width: 800px; margin: 0 auto;">
+                We provide comprehensive dental care services to meet all your oral health needs. 
+                From routine cleanings to advanced procedures, our experienced team is here to help you achieve optimal dental health.
+            </p>
+        </div>
+
+        <div class="grid grid-2">
+            <% services.forEach(service => { %>
+                <div class="card">
+                    <% if (service.image_url) { %>
+                        <img src="<%= service.image_url %>" alt="<%= service.title %>" class="card-image">
+                    <% } %>
+                    <div class="card-content">
+                        <h2 class="card-title"><%= service.title %></h2>
+                        <p class="card-text"><%= service.description %></p>
+                        
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem;">
+                            <div>
+                                <% if (service.price) { %>
+                                    <p style="color: var(--primary-color); font-weight: 600; margin-bottom: 0.25rem;">
+                                        💰 <%= service.price %>
+                                    </p>
+                                <% } %>
+                                <% if (service.duration) { %>
+                                    <p style="color: var(--gray-500); font-size: 0.875rem;">
+                                        ⏱️ <%= service.duration %>
+                                    </p>
+                                <% } %>
+                            </div>
+                            <a href="/contact" class="btn btn-primary">Book Now</a>
+                        </div>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+
+        <% if (services.length === 0) { %>
+            <div class="text-center" style="padding: 4rem 0;">
+                <h3>No services available at the moment.</h3>
+                <p>Please check back later or contact us directly for more information.</p>
+            </div>
+        <% } %>
+    </div>
+</section>
+
+<!-- Call to Action -->
+<section class="section section-dark">
+    <div class="container text-center">
+        <h2>Ready to Schedule Your Appointment?</h2>
+        <p style="color: var(--gray-600); margin-bottom: 2rem;">
+            Our friendly staff is ready to help you schedule your next dental visit. 
+            Contact us today to book your appointment.
+        </p>
+        <div>
+            <a href="/contact" class="btn btn-primary" style="margin-right: 1rem;">Schedule Online</a>
+            <% if (practiceInfo && practiceInfo.phone) { %>
+                <a href="tel:<%= practiceInfo.phone.replace(/[^\d+]/g, '') %>" class="btn btn-secondary">
+                    Call <%= practiceInfo.phone %>
+                </a>
+            <% } %>
+        </div>
+    </div>
+</section>

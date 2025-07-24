@@ -1,0 +1,110 @@
+<%- include('layout', { title: 'About Us' }) %>
+
+<section class="section">
+    <div class="container">
+        <div class="text-center mb-6">
+            <h1>About <%= practiceInfo.practice_name || 'Our Practice' %></h1>
+        </div>
+
+        <div class="grid grid-2" style="align-items: center; margin-bottom: 4rem;">
+            <div>
+                <h2>Our Mission</h2>
+                <p style="font-size: 1.125rem; line-height: 1.6;">
+                    <%= practiceInfo.mission_statement || 'To provide exceptional dental care that improves the health, function, and beauty of our patients\' smiles while ensuring comfort and satisfaction.' %>
+                </p>
+                
+                <h3 style="margin-top: 2rem;">About Our Practice</h3>
+                <p>
+                    <%= practiceInfo.about_text || 'Welcome to our dental practice, where your oral health is our top priority. Our experienced team provides comprehensive dental care in a comfortable, modern environment.' %>
+                </p>
+            </div>
+            <div style="text-align: center;">
+                <img src="https://images.pexels.com/photos/3845622/pexels-photo-3845622.jpeg" 
+                     alt="Dental Office" 
+                     style="width: 100%; height: 300px; object-fit: cover; border-radius: 0.75rem; box-shadow: var(--shadow-lg);">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Team Section -->
+<section class="section section-dark">
+    <div class="container">
+        <div class="text-center mb-6">
+            <h2>Meet Our Team</h2>
+            <p style="color: var(--gray-600);">
+                Our experienced dental professionals are dedicated to providing you with the best possible care.
+            </p>
+        </div>
+
+        <% if (teamMembers && teamMembers.length > 0) { %>
+            <div class="grid grid-3">
+                <% teamMembers.forEach(member => { %>
+                    <div class="team-member card">
+                        <div class="card-content">
+                            <% if (member.image_url) { %>
+                                <img src="<%= member.image_url %>" alt="<%= member.name %>" class="team-image">
+                            <% } %>
+                            <h3 class="team-name"><%= member.name %></h3>
+                            <p class="team-title"><%= member.title %></p>
+                            <p class="team-bio"><%= member.bio %></p>
+                            <% if (member.specialties) { %>
+                                <p class="team-specialties">
+                                    <strong>Specialties:</strong> <%= member.specialties %>
+                                </p>
+                            <% } %>
+                        </div>
+                    </div>
+                <% }) %>
+            </div>
+        <% } else { %>
+            <div class="text-center">
+                <p>Team information will be available soon. Please contact us to learn more about our dental professionals.</p>
+            </div>
+        <% } %>
+    </div>
+</section>
+
+<!-- Practice Values -->
+<section class="section">
+    <div class="container">
+        <div class="text-center mb-6">
+            <h2>Our Values</h2>
+        </div>
+        
+        <div class="grid grid-4">
+            <div class="text-center">
+                <div style="font-size: 3rem; margin-bottom: 1rem;">🎯</div>
+                <h3>Excellence</h3>
+                <p>We strive for excellence in everything we do, from patient care to treatment outcomes.</p>
+            </div>
+            <div class="text-center">
+                <div style="font-size: 3rem; margin-bottom: 1rem;">🤝</div>
+                <h3>Compassion</h3>
+                <p>We treat every patient with kindness, understanding, and respect for their individual needs.</p>
+            </div>
+            <div class="text-center">
+                <div style="font-size: 3rem; margin-bottom: 1rem;">🔬</div>
+                <h3>Innovation</h3>
+                <p>We embrace the latest dental technologies and techniques to provide superior care.</p>
+            </div>
+            <div class="text-center">
+                <div style="font-size: 3rem; margin-bottom: 1rem;">✨</div>
+                <h3>Integrity</h3>
+                <p>We maintain the highest ethical standards in all our professional relationships.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action -->
+<section class="section section-dark">
+    <div class="container text-center">
+        <h2>Experience the Difference</h2>
+        <p style="color: var(--gray-600); margin-bottom: 2rem;">
+            Join our dental family and discover why patients trust us with their smiles. 
+            Schedule your consultation today.
+        </p>
+        <a href="/contact" class="btn btn-primary">Get Started Today</a>
+    </div>
+</section>

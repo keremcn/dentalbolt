@@ -1,0 +1,152 @@
+<%- include('layout', { title: 'Contact Us' }) %>
+
+<section class="section">
+    <div class="container">
+        <div class="text-center mb-6">
+            <h1>Contact Us</h1>
+            <p style="color: var(--gray-600);">
+                Ready to schedule your appointment? Get in touch with us today. 
+                We're here to answer your questions and help you achieve optimal oral health.
+            </p>
+        </div>
+
+        <div class="grid grid-2" style="gap: 3rem;">
+            <!-- Contact Form -->
+            <div class="card">
+                <div class="card-content">
+                    <h2>Schedule an Appointment</h2>
+                    <form action="/contact" method="POST">
+                        <div class="form-group">
+                            <label for="patient_name" class="form-label">Full Name *</label>
+                            <input type="text" id="patient_name" name="patient_name" class="form-input" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email" class="form-label">Email Address *</label>
+                            <input type="email" id="email" name="email" class="form-input" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phone" class="form-label">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" class="form-input">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="service" class="form-label">Service Interested In</label>
+                            <select id="service" name="service" class="form-select">
+                                <option value="">Select a service...</option>
+                                <option value="General Dentistry">General Dentistry</option>
+                                <option value="Cosmetic Dentistry">Cosmetic Dentistry</option>
+                                <option value="Orthodontics">Orthodontics</option>
+                                <option value="Oral Surgery">Oral Surgery</option>
+                                <option value="Emergency Care">Emergency Care</option>
+                                <option value="Consultation">General Consultation</option>
+                            </select>
+                        </div>
+
+                        <div class="grid grid-2">
+                            <div class="form-group">
+                                <label for="preferred_date" class="form-label">Preferred Date</label>
+                                <input type="date" id="preferred_date" name="preferred_date" class="form-input">
+                            </div>
+                            <div class="form-group">
+                                <label for="preferred_time" class="form-label">Preferred Time</label>
+                                <select id="preferred_time" name="preferred_time" class="form-select">
+                                    <option value="">Select time...</option>
+                                    <option value="8:00 AM">8:00 AM</option>
+                                    <option value="9:00 AM">9:00 AM</option>
+                                    <option value="10:00 AM">10:00 AM</option>
+                                    <option value="11:00 AM">11:00 AM</option>
+                                    <option value="12:00 PM">12:00 PM</option>
+                                    <option value="1:00 PM">1:00 PM</option>
+                                    <option value="2:00 PM">2:00 PM</option>
+                                    <option value="3:00 PM">3:00 PM</option>
+                                    <option value="4:00 PM">4:00 PM</option>
+                                    <option value="5:00 PM">5:00 PM</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="message" class="form-label">Additional Message</label>
+                            <textarea id="message" name="message" class="form-textarea" 
+                                    placeholder="Please let us know if you have any specific concerns or questions..."></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">
+                            Request Appointment
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Contact Information -->
+            <div>
+                <div class="contact-info">
+                    <h2>Get in Touch</h2>
+                    
+                    <div class="contact-item">
+                        <span class="contact-icon">📍</span>
+                        <div>
+                            <strong>Address</strong><br>
+                            <%= practiceInfo.address || '123 Main Street, Anytown, ST 12345' %>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <span class="contact-icon">📞</span>
+                        <div>
+                            <strong>Phone</strong><br>
+                            <a href="tel:<%= (practiceInfo.phone || '(555) 123-4567').replace(/[^\d+]/g, '') %>">
+                                <%= practiceInfo.phone || '(555) 123-4567' %>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <span class="contact-icon">✉️</span>
+                        <div>
+                            <strong>Email</strong><br>
+                            <a href="mailto:<%= practiceInfo.email || 'info@brightsmile.com' %>">
+                                <%= practiceInfo.email || 'info@brightsmile.com' %>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <span class="contact-icon">🕒</span>
+                        <div>
+                            <strong>Office Hours</strong><br>
+                            <%= practiceInfo.hours || 'Mon-Fri: 8AM-6PM, Sat: 9AM-2PM, Sun: Closed' %>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Emergency Contact -->
+                <div class="card mt-4">
+                    <div class="card-content">
+                        <h3 style="color: var(--error-color);">🚨 Dental Emergency?</h3>
+                        <p>If you're experiencing a dental emergency outside of office hours, please call our emergency line:</p>
+                        <a href="tel:+15551234567" class="btn btn-accent" style="margin-top: 1rem;">
+                            Emergency: (555) 123-4567
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Insurance Information -->
+                <div class="card mt-4">
+                    <div class="card-content">
+                        <h3>💳 Insurance & Payment</h3>
+                        <p>We accept most major dental insurance plans and offer flexible payment options. Contact us to verify your coverage.</p>
+                        <ul style="margin-top: 1rem; color: var(--gray-600);">
+                            <li>Most dental insurance accepted</li>
+                            <li>Flexible payment plans available</li>
+                            <li>Cash, credit, and check payments</li>
+                            <li>CareCredit financing options</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

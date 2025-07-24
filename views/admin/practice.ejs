@@ -1,0 +1,124 @@
+<%- include('layout', { title: 'Practice Information' }) %>
+
+<div style="margin-bottom: 2rem;">
+    <h1>Practice Information</h1>
+    <p style="color: var(--gray-600);">Manage your practice details, contact information, and general content.</p>
+</div>
+
+<div class="grid grid-2" style="gap: 3rem;">
+    <div class="card">
+        <div class="card-content">
+            <h2>Update Practice Info</h2>
+            <form action="/admin/practice" method="POST">
+                <div class="form-group">
+                    <label for="practice_name" class="form-label">Practice Name *</label>
+                    <input type="text" id="practice_name" name="practice_name" class="form-input" 
+                           value="<%= practiceInfo.practice_name || '' %>" required>
+                </div>
+
+                <div class="grid grid-2">
+                    <div class="form-group">
+                        <label for="phone" class="form-label">Phone Number *</label>
+                        <input type="tel" id="phone" name="phone" class="form-input" 
+                               value="<%= practiceInfo.phone || '' %>" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email" class="form-label">Email Address *</label>
+                        <input type="email" id="email" name="email" class="form-input" 
+                               value="<%= practiceInfo.email || '' %>" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="address" class="form-label">Practice Address *</label>
+                    <textarea id="address" name="address" class="form-textarea" 
+                              rows="3" required><%= practiceInfo.address || '' %></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="hours" class="form-label">Office Hours</label>
+                    <textarea id="hours" name="hours" class="form-textarea" 
+                              rows="3"><%= practiceInfo.hours || '' %></textarea>
+                    <p style="font-size: 0.875rem; color: var(--gray-600); margin-top: 0.25rem;">
+                        Example: Mon-Fri: 8AM-6PM, Sat: 9AM-2PM, Sun: Closed
+                    </p>
+                </div>
+
+                <div class="form-group">
+                    <label for="about_text" class="form-label">About Text</label>
+                    <textarea id="about_text" name="about_text" class="form-textarea" 
+                              rows="4"><%= practiceInfo.about_text || '' %></textarea>
+                    <p style="font-size: 0.875rem; color: var(--gray-600); margin-top: 0.25rem;">
+                        This appears on your homepage and about page.
+                    </p>
+                </div>
+
+                <div class="form-group">
+                    <label for="mission_statement" class="form-label">Mission Statement</label>
+                    <textarea id="mission_statement" name="mission_statement" class="form-textarea" 
+                              rows="3"><%= practiceInfo.mission_statement || '' %></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Update Practice Information</button>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <div class="card">
+            <div class="card-content">
+                <h3>📍 Current Information</h3>
+                <div style="margin-top: 1.5rem;">
+                    <div style="margin-bottom: 1rem;">
+                        <strong>Practice Name:</strong><br>
+                        <span style="color: var(--gray-600);"><%= practiceInfo.practice_name || 'Not set' %></span>
+                    </div>
+                    <div style="margin-bottom: 1rem;">
+                        <strong>Phone:</strong><br>
+                        <span style="color: var(--gray-600);"><%= practiceInfo.phone || 'Not set' %></span>
+                    </div>
+                    <div style="margin-bottom: 1rem;">
+                        <strong>Email:</strong><br>
+                        <span style="color: var(--gray-600);"><%= practiceInfo.email || 'Not set' %></span>
+                    </div>
+                    <div style="margin-bottom: 1rem;">
+                        <strong>Address:</strong><br>
+                        <span style="color: var(--gray-600);"><%= practiceInfo.address || 'Not set' %></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-content">
+                <h3>💡 Content Tips</h3>
+                <ul style="color: var(--gray-600); line-height: 1.6;">
+                    <li><strong>About Text:</strong> Keep it warm and welcoming, focus on patient care</li>
+                    <li><strong>Mission Statement:</strong> Express your core values and commitment</li>
+                    <li><strong>Contact Info:</strong> Ensure all information is current and accurate</li>
+                    <li><strong>Hours:</strong> Include special holiday hours or emergency contact</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-content">
+                <h3>🔗 Quick Links</h3>
+                <div style="display: flex; flex-direction: column; gap: 0.5rem; margin-top: 1rem;">
+                    <a href="/" target="_blank" style="display: flex; align-items: center; color: var(--primary-color);">
+                        <span style="margin-right: 0.5rem;">🏠</span>
+                        View Homepage
+                    </a>
+                    <a href="/about" target="_blank" style="display: flex; align-items: center; color: var(--primary-color);">
+                        <span style="margin-right: 0.5rem;">👥</span>
+                        View About Page
+                    </a>
+                    <a href="/contact" target="_blank" style="display: flex; align-items: center; color: var(--primary-color);">
+                        <span style="margin-right: 0.5rem;">📞</span>
+                        View Contact Page
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

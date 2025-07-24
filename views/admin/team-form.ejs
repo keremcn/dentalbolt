@@ -1,0 +1,120 @@
+<%- include('layout', { title: member ? 'Edit Team Member' : 'Add Team Member' }) %>
+
+<div style="margin-bottom: 2rem;">
+    <h1><%= member ? 'Edit Team Member' : 'Add Team Member' %></h1>
+    <p style="color: var(--gray-600);">
+        <%= member ? 'Update the information for this team member.' : 'Add a new team member to your dental practice.' %>
+    </p>
+</div>
+
+<div class="grid grid-2" style="gap: 3rem;">
+    <div class="card">
+        <div class="card-content">
+            <form action="/admin/team" method="POST" enctype="multipart/form-data">
+                <% if (member) { %>
+                    <input type="hidden" name="id" value="<%= member.id %>">
+                    <input type="hidden" name="existing_image" value="<%= member.image_url %>">
+                <% } %>
+
+                <div class="form-group">
+                    <label for="name" class="form-label">Full Name *</label>
+                    <input type="text" id="name" name="name" class="form-input" 
+                           value="<%= member ? member.name : '' %>" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="title" class="form-label">Professional Title *</label>
+                    <input type="text" id="title" name="title" class="form-input" 
+                           value="<%= member ? member.title : '' %>" 
+                           placeholder="e.g., Lead Dentist, Dental Hygienist, Orthodontist" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="bio" class="form-label">Biography *</label>
+                    <textarea id="bio" name="bio" class="form-textarea" 
+                              rows="5" required><%= member ? member.bio : '' %></textarea>
+                    <p style="font-size: 0.875rem; color: var(--gray-600); margin-top: 0.25rem;">
+                        Include education, experience, and what makes this team member special.
+                    </p>
+                </div>
+
+                <div class="form-group">
+                    <label for="specialties" class="form-label">Specialties</label>
+                    <input type="text" id="specialties" name="specialties" class="form-input" 
+                           value="<%= member ? member.specialties : '' %>" 
+                           placeholder="e.g., Cosmetic Dentistry, Root Canal Therapy">
+                    <p style="font-size: 0.875rem; color: var(--gray-600); margin-top: 0.25rem;">
+                        Separate multiple specialties with commas.
+                    </p>
+                </div>
+
+                <div class="form-group">
+                    <label for="image" class="form-label">Professional Photo</label>
+                    <input type="file" id="image" name="image" class="form-input" accept="image/*">
+                    <p style="font-size: 0.875rem; color: var(--gray-600); margin-top: 0.25rem;">
+                        Upload a professional headshot. JPG, PNG formats accepted.
+                    </p>
+                </div>
+
+                <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                    <button type="submit" class="btn btn-primary">
+                        <%= member ? 'Update Team Member' : 'Add Team Member' %>
+                    </button>
+                    <a href="/admin/team" class="btn btn-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <% if (member && member.image_url) { %>
+            <div class="card">
+                <div class="card-content">
+                    <h3>Current Photo</h3>
+                    <img src="<%= member.image_url %>" alt="<%= member.name %>" 
+                         style="width: 100%; height: 250px; object-fit: cover; border-radius: 0.5rem; margin-top: 1rem;">
+                </div>
+            </div>
+        <% } %>
+
+        <div class="card mt-4">
+            <div class="card-content">
+                <h3>📸 Photo Guidelines</h3>
+                <ul style="color: var(--gray-600); line-height: 1.6;">
+                    <li><strong>Professional Quality:</strong> Use high-resolution, well-lit photos</li>
+                    <li><strong>Appropriate Attire:</strong> Professional medical/dental clothing</li>
+                    <li><strong>Friendly Expression:</strong> Warm, welcoming smile</li>
+                    <li><strong>Clean Background:</strong> Simple, uncluttered background</li>
+                    <li><strong>Square Format:</strong> Works best for consistent display</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-content">
+                <h3>✍️ Writing Tips</h3>
+                <ul style="color: var(--gray-600); line-height: 1.6;">
+                    <li><strong>Education:</strong> Mention where they studied and degrees earned</li>
+                    <li><strong>Experience:</strong> Years of practice and notable achievements</li>
+                    <li><strong>Personal Touch:</strong> Include interests or what they enjoy about dentistry</li>
+                    <li><strong>Patient Focus:</strong> Emphasize their commitment to patient care</li>
+                    <li><strong>Specializations:</strong> Highlight areas of expertise</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-content">
+                <h3>🦷 Common Titles</h3>
+                <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem;">
+                    <span style="background-color: var(--gray-100); padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.875rem;">General Dentist</span>
+                    <span style="background-color: var(--gray-100); padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.875rem;">Orthodontist</span>
+                    <span style="background-color: var(--gray-100); padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.875rem;">Dental Hygienist</span>
+                    <span style="background-color: var(--gray-100); padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.875rem;">Oral Surgeon</span>
+                    <span style="background-color: var(--gray-100); padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.875rem;">Dental Assistant</span>
+                    <span style="background-color: var(--gray-100); padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.875rem;">Practice Manager</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

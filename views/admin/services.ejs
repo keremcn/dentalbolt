@@ -1,0 +1,76 @@
+<%- include('layout', { title: 'Manage Services' }) %>
+
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+    <div>
+        <h1>Manage Services</h1>
+        <p style="color: var(--gray-600);">Add, edit, and organize your dental services.</p>
+    </div>
+    <a href="/admin/services/add" class="btn btn-primary">Add New Service</a>
+</div>
+
+<% if (services.length > 0) { %>
+    <div class="card">
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>Service</th>
+                    <th>Price</th>
+                    <th>Duration</th>
+                    <th>Created</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% services.forEach(service => { %>
+                    <tr>
+                        <td>
+                            <div style="display: flex; align-items: center;">
+                                <% if (service.image_url) { %>
+                                    <img src="<%= service.image_url %>" 
+                                         style="width: 50px; height: 50px; object-fit: cover; border-radius: 0.25rem; margin-right: 1rem;" 
+                                         alt="<%= service.title %>">
+                                <% } %>
+                                <div>
+                                    <strong><%= service.title %></strong>
+                                    <p style="color: var(--gray-600); font-size: 0.875rem; margin: 0;">
+                                        <%= service.description.substring(0, 80) %>...
+                                    </p>
+                                </div>
+                            </div>
+                        </td>
+                        <td><%= service.price || 'Not set' %></td>
+                        <td><%= service.duration || 'Not set' %></td>
+                        <td style="font-size: 0.875rem; color: var(--gray-600);">
+                            <%= new Date(service.created_at).toLocaleDateString() %>
+                        </td>
+                        <td>
+                            <div style="display: flex; gap: 0.5rem;">
+                                <a href="/admin/services/edit/<%= service.id %>" class="btn" 
+                                   style="padding: 0.25rem 0.75rem; font-size: 0.875rem; background-color: var(--secondary-color); color: white;">
+                                    Edit
+                                </a>
+                                <form action="/admin/services/delete/<%= service.id %>" method="POST" style="display: inline;">
+                                    <button type="submit" class="btn" 
+                                            style="padding: 0.25rem 0.75rem; font-size: 0.875rem; background-color: var(--error-color); color: white;">
+                                        Delete
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+<% } else { %>
+    <div class="card">
+        <div class="card-content text-center" style="padding: 3rem;">
+            <div style="font-size: 3rem; margin-bottom: 1rem;">🦷</div>
+            <h3>No Services Yet</h3>
+            <p style="color: var(--gray-600); margin-bottom: 2rem;">
+                Get started by adding your first dental service to showcase on your website.
+            </p>
+            <a href="/admin/services/add" class="btn btn-primary">Add Your First Service</a>
+        </div>
+    </div>
+<% } %>
